@@ -11,16 +11,21 @@ import { multiply, isSmallerThan10 } from './1_basics';
 
 describe('1_Basics', () => {
   describe('multiply()', () => {
-    it('...', () => {
-      multiply(3, 5);
-      // your test here...
+    it('should multiply two numbers', () => {
+      const output = multiply(3, 5);
+      expect(output).toBe(15);
     });
   });
 
   describe('isSmallerThan10()', () => {
-    it('....', () => {
-      isSmallerThan10(5);
-      // your test here...
+    it('should output "yes, dah!"', () => {
+      const output = isSmallerThan10(5);
+      expect(output).toBe('yes dah!');
+    });
+
+    it('should output "not really..."', () => {
+      const output = isSmallerThan10(10);
+      expect(output).toBe('not really...');
     });
   });
 });
