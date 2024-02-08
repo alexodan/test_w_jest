@@ -18,12 +18,12 @@ describe('1_Basics', () => {
   });
 
   describe('isSmallerThan10()', () => {
-    it('should output "yes, dah!"', () => {
+    it('should output "yes dah!" for numbers smaller than 10', () => {
       const output = isSmallerThan10(5);
       expect(output).toBe('yes dah!');
     });
 
-    it('should output "not really..."', () => {
+    it('should output "not really..." for numbers greater than 10', () => {
       const output = isSmallerThan10(10);
       expect(output).toBe('not really...');
     });
