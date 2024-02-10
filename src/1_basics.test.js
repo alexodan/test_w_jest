@@ -11,21 +11,21 @@ import { multiply, isSmallerThan10 } from './1_basics';
 
 describe('1_Basics', () => {
   describe('multiply()', () => {
-    it('should multiply two numbers', () => {
-      const output = multiply(3, 5);
-      expect(output).toBe(15);
+    it('returns two numbers multiplied', () => {
+      const result = multiply(3, 5);
+      expect(result).toBe(15);
     });
   });
 
   describe('isSmallerThan10()', () => {
-    it('should output "yes dah!" for numbers smaller than 10', () => {
-      const output = isSmallerThan10(5);
-      expect(output).toBe('yes dah!');
+    it('returns "yes dah!" given a number smaller than 10', () => {
+      const result = isSmallerThan10(5);
+      expect(result).toBe('yes dah!');
     });
 
-    it('should output "not really..." for numbers greater than 10', () => {
-      const output = isSmallerThan10(10);
-      expect(output).toBe('not really...');
+    it('returns "not really..." given a number greater than 10', () => {
+      const result = isSmallerThan10(10);
+      expect(result).toBe('not really...');
     });
   });
 });
