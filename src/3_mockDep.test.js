@@ -17,17 +17,17 @@ describe('3_mockDep', () => {
   });
 
   it('returns a valid 10 char long password with a letter and without special char', async () => {
-    const output = await generatePassword(10);
+    const result = await generatePassword(10);
 
     expect(validatePasswordApi).toHaveBeenCalledWith('bbbbbbbbbb');
-    expect(output.length).toBe(10);
+    expect(result.length).toBe(10);
   });
 
   it('returns a valid 10 char long pw with a letter and special char at the end', async () => {
-    const output = await generatePassword(10, '!');
+    const result = await generatePassword(10, '!');
 
     expect(validatePasswordApi).toHaveBeenCalledWith('bbbbbbbbbb!');
-    expect(output.length).toBe(11);
+    expect(result.length).toBe(11);
   });
 
   it('throws an error when password is not strong enough', async () => {
