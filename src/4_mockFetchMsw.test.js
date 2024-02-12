@@ -1,32 +1,8 @@
 import 'whatwg-fetch';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
+import { server, rest } from './testServer';
 import { fetchJoke } from './4_mockFetch';
 
 describe('4_mockFetch - simple', () => {
-  const server = setupServer(
-    rest.get('https://v2.jokeapi.dev/joke/Programming', (req, res, ctx) => {
-      const topic = req.url.searchParams.get('contains');
-      if (!topic) {
-        return res(
-          ctx.json({
-            type: 'single',
-            joke: "Knock knock. Who's there? Recursion. Recursion who? Knock knock.",
-          })
-        );
-      }
-      return res(
-        ctx.json({
-          type: 'single',
-          joke: "bug. that's it that's the joke",
-        })
-      );
-    })
-  );
-  beforeAll(() => server.listen());
-  afterAll(() => server.close());
-  afterEach(() => server.resetHandlers());
-
   it('returns a single-type joke from Programming category without specific keywords', async () => {
     expect(await fetchJoke()).toBe(
       "Knock knock. Who's there? Recursion. Recursion who? Knock knock."
@@ -51,26 +27,19 @@ describe('4_mockFetch - simple', () => {
     );
     expect(await fetchJoke()).toContain('...');
   });
-});
-
-describe('fetchJoke - error handling', () => {
-  beforeAll(() => server.listen());
-  afterAll(() => server.close());
-  afterEach(() => server.resetHandlers());
-
-  const server = setupServer(
-    rest.get('https://v2.jokeapi.dev/joke/Programming', (req, res, ctx) => {
-      return res(
-        ctx.json({
-          error: true,
-          message: 'Something went wrong',
-          causedBy: ['Ran out of good jokes'],
-        })
-      );
-    })
-  );
 
   it('gracefully handles error response structures from the API', async () => {
+    server.use(
+      rest.get('https://v2.jokeapi.dev/joke/Programming', (req, res, ctx) => {
+        return res(
+          ctx.json({
+            error: true,
+            message: 'Something went wrong',
+            causedBy: ['Ran out of good jokes'],
+          })
+        );
+      })
+    );
     expect(await fetchJoke()).toBe('Something went wrong. Ran out of good jokes');
   });
 });
