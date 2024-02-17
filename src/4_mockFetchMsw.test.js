@@ -1,16 +1,8 @@
 import 'whatwg-fetch';
-import { server, rest } from './testServer';
+import { urls, server, rest } from './testServer';
 import { fetchJoke } from './4_mockFetch';
 
 describe('4_mockFetch - simple', () => {
-  const urls = [];
-
-  beforeAll(() => {
-    server.events.on('request:match', req => {
-      urls.push(req.url.href);
-    });
-  });
-
   it('returns a single-type joke from Programming category without specific keywords', async () => {
     expect(await fetchJoke()).toBe(
       "Knock knock. Who's there? Recursion. Recursion who? Knock knock."

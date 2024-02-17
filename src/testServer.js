@@ -26,8 +26,18 @@ const server = setupServer(
   })
 );
 
-beforeAll(() => server.listen());
-afterAll(() => server.close());
+const urls = [];
+
+beforeAll(() => {
+  server.listen();
+  server.events.on('request:match', req => {
+    urls.push(req.url.href);
+  });
+});
+afterAll(() => {
+  server.close();
+  urls.length = 0;
+});
 afterEach(() => server.resetHandlers());
 
-export { server, rest };
+export { urls, server, rest };
