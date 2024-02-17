@@ -16,7 +16,7 @@ const server = setupServer(
     return res(
       ctx.json({
         type: 'single',
-        joke: "bug. that's it that's the joke",
+        joke: `${topic}. that's it that's the joke`,
       })
     );
   }),
