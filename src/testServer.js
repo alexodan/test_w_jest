@@ -26,18 +26,30 @@ const server = setupServer(
   })
 );
 
+export const listenRequest = url => {
+  const matches = [];
+
+  function onMatch(req) {
+    if (req.url.href !== url) {
+      return;
+    }
+    matches.push(req);
+  }
+
+  server.events.on('request:match', onMatch);
+
+  return {
+    matches,
+    cleanup: () => {
+      server.events.removeListener('request:match', onMatch);
+    },
+  };
+};
+
 const urls = [];
 
-beforeAll(() => {
-  server.listen();
-  server.events.on('request:match', req => {
-    urls.push(req.url.href);
-  });
-});
-afterAll(() => {
-  server.close();
-  urls.length = 0;
-});
+beforeAll(() => server.listen());
+afterAll(() => server.close());
 afterEach(() => server.resetHandlers());
 
 export { urls, server, rest };
